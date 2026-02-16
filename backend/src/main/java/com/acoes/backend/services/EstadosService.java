@@ -17,7 +17,7 @@ public class EstadosService {
         this.repository = repository;
     }
 
-    public List<Integer> listarEstados() {
+    public List<String> listarEstados() {
         return repository.findAll()
                 .stream()
                 .map(Estados::getCodigoIbge)
@@ -25,7 +25,7 @@ public class EstadosService {
                 .collect(Collectors.toList());
     }
 
-    public List<Estados> listarPorCodigoIbge(Integer codigoIbge) {
+    public List<Estados> listarPorCodigoIbge(String codigoIbge) {
         return repository.findByCodigoIbge(codigoIbge);
     }
 }

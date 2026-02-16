@@ -21,12 +21,12 @@ public class EstadosController {
     }
 
     @GetMapping
-    public List<Integer> listarEstados() {
+    public List<String> listarEstados() {
         return service.listarEstados();
     }
 
     @GetMapping("/{codigoIbge}")
-    public List<Estados> listarPorCodigoIbge(@PathVariable Integer codigoIbge) {
+    public List<Estados> listarPorCodigoIbge(@PathVariable String codigoIbge) {
         return service.listarPorCodigoIbge(codigoIbge);
     }
 }

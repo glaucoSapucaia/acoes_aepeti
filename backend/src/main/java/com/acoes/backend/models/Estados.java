@@ -20,11 +20,13 @@ public class Estados implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "codigo_ibge", nullable = false)
-    private Integer codigoIbge;
+    // código IBGE como string (VARCHAR2)
+    @Column(name = "codigo_ibge", nullable = false, length = 10)
+    private String codigoIbge;
 
-    @Column(nullable = false)
-    private Integer anomes;
+    // ano-mês como DATE (YYYYMM)
+    @Column(name = "anomes", nullable = false)
+    private String anomes;
 
     @Column(name = "qtd_acoes_eixo_01")
     private Integer qtdAcoesEixo01;
@@ -50,19 +52,19 @@ public class Estados implements Serializable {
         this.id = id;
     }
 
-    public Integer getCodigoIbge() {
+    public String getCodigoIbge() {
         return codigoIbge;
     }
 
-    public void setCodigoIbge(Integer codigoIbge) {
+    public void setCodigoIbge(String codigoIbge) {
         this.codigoIbge = codigoIbge;
     }
 
-    public Integer getAnomes() {
+    public String getAnomes() {
         return anomes;
     }
 
-    public void setAnomes(Integer anomes) {
+    public void setAnomes(String anomes) {
         this.anomes = anomes;
     }
 

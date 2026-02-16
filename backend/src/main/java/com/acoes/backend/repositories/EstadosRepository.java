@@ -9,5 +9,5 @@ import com.acoes.backend.models.Estados;
 
 @Repository
 public interface EstadosRepository extends JpaRepository<Estados, Long> {
-    List<Estados> findByCodigoIbge(Integer codigoIbge);
+    List<Estados> findByCodigoIbge(String codigoIbge);
 }
