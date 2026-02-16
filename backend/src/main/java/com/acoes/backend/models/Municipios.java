@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "estados", uniqueConstraints = {
+@Table(name = "municipios", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "codigo_ibge", "anomes" })
 })
-public class Estados implements Serializable {
+public class Municipios implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Estados implements Serializable {
     @Column(name = "codigo_ibge", nullable = false, length = 10)
     private String codigoIbge;
 
-    @Column(name = "anomes", nullable = false)
+    @Column(name = "anomes", nullable = false, length = 6)
     private String anomes;
 
     @Column(name = "qtd_acoes_eixo_01")
@@ -42,6 +42,7 @@ public class Estados implements Serializable {
     private Integer qtdAcoesEixo05;
 
     // Getters e Setters
+
     public Long getId() {
         return id;
     }
