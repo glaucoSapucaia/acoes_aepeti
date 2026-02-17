@@ -1,0 +1,39 @@
+<div>
+  <h2>Municípios</h2>
+
+  <select
+    [ngModel]="selecionado()"
+    (ngModelChange)="selecionado.set($event); carregarMunicipios($event)"
+  >
+    <option *ngFor="let codigo of codigosIbge()" [value]="codigo">
+      {{ codigo }}
+    </option>
+  </select>
+
+  <table *ngIf="municipios().length > 0" border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código IBGE</th>
+        <th>Ano/Mês</th>
+        <th>Eixo 01</th>
+        <th>Eixo 02</th>
+        <th>Eixo 03</th>
+        <th>Eixo 04</th>
+        <th>Eixo 05</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let municipio of municipios()">
+        <td>{{ municipio.id }}</td>
+        <td>{{ municipio.codigoIbge }}</td>
+        <td>{{ municipio.anomes }}</td>
+        <td>{{ municipio.qtdAcoesEixo01 }}</td>
+        <td>{{ municipio.qtdAcoesEixo02 }}</td>
+        <td>{{ municipio.qtdAcoesEixo03 }}</td>
+        <td>{{ municipio.qtdAcoesEixo04 }}</td>
+        <td>{{ municipio.qtdAcoesEixo05 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

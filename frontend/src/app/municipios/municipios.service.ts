@@ -2,21 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
-import { Estados } from './estados.model';
+import { Municipios } from './municipios.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EstadoService {
-  private baseUrl = `${environment.apiUrl}/estados`;
+export class MunicipiosService {
+  private baseUrl = `${environment.apiUrl}/municipios`;
 
   constructor(private http: HttpClient) {}
 
-  listarEstados(): Observable<string[]> {
+  listarMunicipios(): Observable<string[]> {
     return this.http.get<string[]>(this.baseUrl);
   }
 
-  listarPorCodigoIbge(codigoIbge: string): Observable<Estados[]> {
-    return this.http.get<Estados[]>(`${this.baseUrl}/${codigoIbge}`);
+  listarPorCodigoIbge(codigoIbge: string): Observable<Municipios[]> {
+    return this.http.get<Municipios[]>(`${this.baseUrl}/${codigoIbge}`);
   }
 }
