@@ -30,10 +30,11 @@ public class DashboardService {
 
     public List<DashboardEixoDTO> getDashboardEixo(
             String uf,
+            String eixo,
             LocalDate dataInicio,
             LocalDate dataFim) {
 
-        return repository.dashboardByEixo(uf, dataInicio, dataFim);
+        return repository.dashboardByEixo(uf, eixo, dataInicio, dataFim);
     }
 
     public List<DashboardPeriodoDTO> getDashboardPeriodo(

@@ -37,10 +37,11 @@ public class DashboardController {
     @GetMapping("/eixo")
     public List<DashboardEixoDTO> porEixo(
             @RequestParam(required = false) String uf,
+            @RequestParam(required = false) String eixo,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
 
-        return service.getDashboardEixo(uf, dataInicio, dataFim);
+        return service.getDashboardEixo(uf, eixo, dataInicio, dataFim);
     }
 
     @GetMapping("/periodo")

@@ -1,0 +1,47 @@
+<div class="dashboard-container">
+  <h1>Dashboard Monitoramento</h1>
+
+  <form [formGroup]="filterForm" (ngSubmit)="buscarDados()" class="filtro-container">
+    <input type="text" formControlName="uf" placeholder="UF (MG, SP, PE etc)" />
+    <input type="text" formControlName="eixo" placeholder="Eixo (1, 2, 3, etc)" />
+    <input type="date" formControlName="dataInicio" />
+    <input type="date" formControlName="dataFim" />
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <hr />
+
+  <section class="chart-section">
+    <h2>Por UF</h2>
+    <apx-chart
+      *ngIf="hasUfData()"
+      [series]="ufSeries()"
+      [chart]="ufChart"
+      [xaxis]="ufXAxis()"
+      [title]="ufTitle"
+    ></apx-chart>
+    <p *ngIf="!hasUfData()">Nenhum dado disponível.</p>
+  </section>
+
+  <section class="chart-section">
+    <h2>Por Eixo</h2>
+    <apx-chart
+      *ngIf="hasEixoData()"
+      [series]="eixoSeries()"
+      [chart]="eixoChart"
+      [labels]="eixoLabels()"
+    ></apx-chart>
+    <p *ngIf="!hasEixoData()">Nenhum dado disponível.</p>
+  </section>
+
+  <section class="chart-section">
+    <h2>Por Período</h2>
+    <apx-chart
+      *ngIf="hasPeriodoData()"
+      [series]="periodoSeries()"
+      [chart]="periodoChart"
+      [xaxis]="periodoXAxis()"
+    ></apx-chart>
+    <p *ngIf="!hasPeriodoData()">Nenhum dado disponível.</p>
+  </section>
+</div>

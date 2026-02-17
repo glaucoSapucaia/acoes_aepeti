@@ -3,6 +3,7 @@ Projeto em java+spring+angular para a visualização de ações do programa de e
 
 ## Tools
 - [start.spring](https://start.spring.io/)
+- [apex.charts](https://apexcharts.com/docs/installation/)
 
 ## Dados
 - [vis data 3](https://aplicacoes.cidadania.gov.br/vis/data3/data-explorer.php)

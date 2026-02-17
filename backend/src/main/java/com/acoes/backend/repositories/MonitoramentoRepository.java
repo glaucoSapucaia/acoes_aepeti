@@ -45,6 +45,7 @@ public interface MonitoramentoRepository extends JpaRepository<Monitoramento, Lo
                 )
                 FROM Monitoramento m
                 WHERE (:uf IS NULL OR m.siglaUf = :uf)
+                  AND (:eixo IS NULL OR m.codSeqEixo = :eixo)
                   AND m.dataInicial >= COALESCE(:dataInicio, m.dataInicial)
                   AND m.dataInicial <= COALESCE(:dataFim, m.dataInicial)
                 GROUP BY m.nomeEixo
@@ -52,6 +53,7 @@ public interface MonitoramentoRepository extends JpaRepository<Monitoramento, Lo
             """)
     List<DashboardEixoDTO> dashboardByEixo(
             @Param("uf") String uf,
+            @Param("eixo") String eixo,
             @Param("dataInicio") LocalDate dataInicio,
             @Param("dataFim") LocalDate dataFim);
 
