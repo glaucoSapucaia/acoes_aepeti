@@ -57,7 +57,7 @@ export class EixoChart {
   public labels = signal<string[]>([]);
 
   public chart: ApexChart = {
-    type: 'pie',
+    type: 'donut',
     height: 350,
     background: '#1f1f1f',
     foreColor: '#e0e0e0',
