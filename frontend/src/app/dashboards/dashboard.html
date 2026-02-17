@@ -15,10 +15,11 @@
     <h2>Por UF</h2>
     <apx-chart
       *ngIf="hasUfData()"
-      [series]="ufSeries()"
-      [chart]="ufChart"
-      [xaxis]="ufXAxis()"
-      [title]="ufTitle"
+      [series]="ufChartClass.series()"
+      [chart]="ufChartClass.chart"
+      [xaxis]="ufChartClass.xaxis()"
+      [title]="ufChartClass.title"
+      [theme]="ufChartClass.theme"
     ></apx-chart>
     <p *ngIf="!hasUfData()">Nenhum dado disponível.</p>
   </section>
@@ -27,9 +28,11 @@
     <h2>Por Eixo</h2>
     <apx-chart
       *ngIf="hasEixoData()"
-      [series]="eixoSeries()"
-      [chart]="eixoChart"
-      [labels]="eixoLabels()"
+      [series]="eixoChartClass.series()"
+      [chart]="eixoChartClass.chart"
+      [labels]="eixoChartClass.labels()"
+      [title]="eixoChartClass.title"
+      [theme]="eixoChartClass.theme"
     ></apx-chart>
     <p *ngIf="!hasEixoData()">Nenhum dado disponível.</p>
   </section>
@@ -38,9 +41,11 @@
     <h2>Por Período</h2>
     <apx-chart
       *ngIf="hasPeriodoData()"
-      [series]="periodoSeries()"
-      [chart]="periodoChart"
-      [xaxis]="periodoXAxis()"
+      [series]="periodoChartClass.series()"
+      [chart]="periodoChartClass.chart"
+      [xaxis]="periodoChartClass.xaxis()"
+      [title]="periodoChartClass.title"
+      [theme]="periodoChartClass.theme"
     ></apx-chart>
     <p *ngIf="!hasPeriodoData()">Nenhum dado disponível.</p>
   </section>

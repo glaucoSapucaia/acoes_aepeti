@@ -1,14 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexNonAxisChartSeries,
-  ApexTitleSubtitle,
-  ApexXAxis,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { EixoChart, PeriodoChart, UfChart } from './charts.models';
 import { DashboardService } from './dashboard.service';
 
 @Component({
@@ -29,53 +23,10 @@ export class DashboardComponent implements OnInit {
     dataFim: [null as string | null],
   });
 
-  // ===== Gráficos =====
-  ufSeries = signal<ApexAxisChartSeries>([]);
-  ufXAxis = signal<ApexXAxis>({
-    categories: [],
-    labels: { style: { colors: '#e0e0e0' } },
-    axisBorder: { color: '#333' },
-    axisTicks: { color: '#333' },
-  });
-  eixoSeries = signal<ApexNonAxisChartSeries>([]);
-  eixoLabels = signal<string[]>([]);
-  periodoSeries = signal<ApexAxisChartSeries>([]);
-  periodoXAxis = signal<ApexXAxis>({
-    categories: [],
-    labels: { style: { colors: '#e0e0e0' } },
-    axisBorder: { color: '#333' },
-    axisTicks: { color: '#333' },
-  });
-
-  ufChart: ApexChart = {
-    type: 'bar',
-    height: 350,
-    background: '#1f1f1f', // fundo escuro
-    foreColor: '#e0e0e0', // textos do chart
-    toolbar: { show: true },
-    zoom: { enabled: true },
-  };
-
-  ufTitle: ApexTitleSubtitle = {
-    text: 'Distribuição por UF',
-    style: { color: '#e0e0e0', fontSize: '16px' },
-  };
-
-  eixoChart: ApexChart = {
-    type: 'pie',
-    height: 350,
-    background: '#1f1f1f',
-    foreColor: '#e0e0e0',
-  };
-
-  periodoChart: ApexChart = {
-    type: 'line',
-    height: 350,
-    background: '#1f1f1f',
-    foreColor: '#e0e0e0',
-    toolbar: { show: true },
-    zoom: { enabled: true },
-  };
+  // ===== Gráficos como classes =====
+  ufChartClass = new UfChart();
+  eixoChartClass = new EixoChart();
+  periodoChartClass = new PeriodoChart();
 
   ngOnInit(): void {
     const hoje = new Date();
@@ -99,47 +50,41 @@ export class DashboardComponent implements OnInit {
 
     // 🔹 Gráfico UF
     this.service.getUf(filters).subscribe((data) => {
-      this.ufSeries.set([{ name: 'Total', data: data.map((d) => d.total) }]);
-      this.ufXAxis.set({ ...this.ufXAxis(), categories: data.map((d) => d.siglaUf) });
+      this.ufChartClass.series.set([{ name: 'Total', data: data.map((d) => d.total) }]);
+      this.ufChartClass.xaxis.set({
+        ...this.ufChartClass.xaxis(),
+        categories: data.map((d) => d.siglaUf),
+      });
     });
 
     // 🔹 Gráfico Eixo
     this.service.getEixo(filters).subscribe((data) => {
-      this.eixoSeries.set(data.map((d) => d.total));
-      this.eixoLabels.set(data.map((d) => d.nomeEixo));
+      this.eixoChartClass.series.set(data.map((d) => d.total));
+      this.eixoChartClass.labels.set(data.map((d) => d.nomeEixo));
     });
 
     // 🔹 Gráfico Período
     this.service.getPeriodo(filters).subscribe((data) => {
-      this.periodoSeries.set([{ name: 'Total', data: data.map((d) => d.total) }]);
-      this.periodoXAxis.set({ ...this.periodoXAxis(), categories: data.map((d) => d.data) });
+      this.periodoChartClass.series.set([{ name: 'Total', data: data.map((d) => d.total) }]);
+      this.periodoChartClass.xaxis.set({
+        ...this.periodoChartClass.xaxis(),
+        categories: data.map((d) => d.data),
+      });
     });
   }
 
   hasUfData(): boolean {
-    const s = this.ufSeries();
-    if (!s || s.length === 0) return false;
-
-    const first = s[0];
-    if (typeof first === 'object' && 'data' in first) {
-      return Array.isArray(first.data) && first.data.length > 0;
-    }
-    return false;
+    const s = this.ufChartClass.series();
+    return s.length > 0 && Array.isArray(s[0].data) && s[0].data.length > 0;
   }
 
   hasEixoData(): boolean {
-    const s = this.eixoSeries();
-    return Array.isArray(s) && s.length > 0 && s.some((v) => typeof v === 'number' && v > 0);
+    const s = this.eixoChartClass.series();
+    return s.length > 0 && s.some((v) => typeof v === 'number' && v > 0);
   }
 
   hasPeriodoData(): boolean {
-    const s = this.periodoSeries();
-    if (!s || s.length === 0) return false;
-
-    const first = s[0];
-    if (typeof first === 'object' && 'data' in first) {
-      return Array.isArray(first.data) && first.data.length > 0;
-    }
-    return false;
+    const s = this.periodoChartClass.series();
+    return s.length > 0 && Array.isArray(s[0].data) && s[0].data.length > 0;
   }
 }
