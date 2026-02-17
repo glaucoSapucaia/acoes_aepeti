@@ -1,0 +1,37 @@
+<div>
+  <h2>Estados</h2>
+
+  <select
+    [ngModel]="selecionado()"
+    (ngModelChange)="selecionado.set($event); carregarEstados($event)"
+  >
+    <option *ngFor="let codigo of codigosIbge()" [value]="codigo">{{ codigo }}</option>
+  </select>
+
+  <table *ngIf="estados().length > 0" border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código IBGE</th>
+        <th>Ano/Mês</th>
+        <th>Eixo 01</th>
+        <th>Eixo 02</th>
+        <th>Eixo 03</th>
+        <th>Eixo 04</th>
+        <th>Eixo 05</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estado of estados()">
+        <td>{{ estado.id }}</td>
+        <td>{{ estado.codigoIbge }}</td>
+        <td>{{ estado.anomes }}</td>
+        <td>{{ estado.qtdAcoesEixo01 }}</td>
+        <td>{{ estado.qtdAcoesEixo02 }}</td>
+        <td>{{ estado.qtdAcoesEixo03 }}</td>
+        <td>{{ estado.qtdAcoesEixo04 }}</td>
+        <td>{{ estado.qtdAcoesEixo05 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

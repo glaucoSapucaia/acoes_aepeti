@@ -1,1 +1,145 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+
+/* Variáveis de cores */
+$color-bg: #121212;
+$color-primary: #1e88e5;
+$color-text: #e0e0e0;
+$color-header-footer: #1f1f1f;
+$color-hover: #333;
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Body */
+body {
+  background-color: $color-bg;
+  color: $color-text;
+  line-height: 1.6;
+}
+
+/* Links */
+a {
+  color: $color-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: lighten($color-primary, 10%);
+  }
+}
+
+/* Menu / header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $color-header-footer;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+
+  nav a {
+    margin-left: 1.5rem;
+    font-weight: bold;
+    color: $color-text;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+/* Main content */
+main {
+  padding: 100px 2rem 60px 2rem; // espaço para header e footer fixos
+  min-height: calc(100vh - 160px); // altura total menos header/footer
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $color-header-footer;
+  padding: 1rem 2rem;
+  text-align: center;
+  color: $color-text;
+  font-size: 0.9rem;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  th, td {
+    border: 1px solid $color-hover;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  th {
+    background-color: $color-header-footer;
+  }
+
+  tr:nth-child(even) {
+    background-color: lighten($color-bg, 3%);
+  }
+}
+
+/* Select e inputs */
+select, input, button {
+  background-color: $color-header-footer;
+  color: $color-text;
+  border: 1px solid $color-hover;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &:hover {
+    border-color: $color-primary;
+  }
+}
+
+/* Botões */
+button {
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $color-hover;
+  }
+}
+
+/* Parágrafos e textos gerais */
+p {
+  font-size: 1.1rem;       // aumenta o tamanho da fonte
+  line-height: 1.8;        // aumenta o espaçamento entre linhas
+  letter-spacing: 0.5px;   // espaço entre letras
+  color: $color-text;      // mantém a cor definida
+  margin-bottom: 1rem;     // espaçamento entre parágrafos
+  text-align: justify;      // alinha o texto de forma mais agradável
+}
+
+/* Subtítulos (h2, h3, h4) */
+h2, h3, h4 {
+  color: $color-primary;   // mantém a cor principal para destaques
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
