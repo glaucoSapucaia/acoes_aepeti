@@ -12,21 +12,43 @@ import { MunicipiosService } from './municipios.service';
   styleUrls: ['./municipios.scss'],
 })
 export class MunicipiosComponent implements OnInit {
-  codigosIbge = signal<string[]>([]);
   municipios = signal<Municipios[]>([]);
-  selecionado = signal('');
+  filtroCodigo = signal('');
+  paginaAtual = signal(0);
+  totalPaginas = signal(0);
+  tamanhoPagina = 10;
 
   constructor(private municipiosService: MunicipiosService) {}
 
   ngOnInit(): void {
-    this.municipiosService.listarMunicipios().subscribe((data) => {
-      this.codigosIbge.set(data);
-    });
+    this.carregarMunicipios();
   }
 
-  carregarMunicipios(codigoIbge: string): void {
-    this.municipiosService.listarPorCodigoIbge(codigoIbge).subscribe((data) => {
-      this.municipios.set(data);
-    });
+  aplicarFiltro(): void {
+    this.paginaAtual.set(0);
+    this.carregarMunicipios();
+  }
+
+  carregarMunicipios(): void {
+    this.municipiosService
+      .listar(this.paginaAtual(), this.tamanhoPagina, this.filtroCodigo())
+      .subscribe((data) => {
+        this.municipios.set(data.content);
+        this.totalPaginas.set(data.totalPages);
+      });
+  }
+
+  proximaPagina() {
+    if (this.paginaAtual() + 1 < this.totalPaginas()) {
+      this.paginaAtual.update((p) => p + 1);
+      this.carregarMunicipios();
+    }
+  }
+
+  paginaAnterior() {
+    if (this.paginaAtual() > 0) {
+      this.paginaAtual.update((p) => p - 1);
+      this.carregarMunicipios();
+    }
   }
 }

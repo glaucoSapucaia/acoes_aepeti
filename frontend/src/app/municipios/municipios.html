@@ -1,33 +1,44 @@
-<div>
+<div class="container-municipios">
   <h2>Municípios</h2>
+  <p>
+    Tabela de códigos IBGE (Estados e Municípios)
+    <a href="https://www.ibge.gov.br/explica/codigos-dos-municipios.php">Tabela</a>
+  </p>
 
-  <select
-    [ngModel]="selecionado()"
-    (ngModelChange)="selecionado.set($event); carregarMunicipios($event)"
-  >
-    <option *ngFor="let codigo of codigosIbge()" [value]="codigo">
-      {{ codigo }}
-    </option>
-  </select>
+  <div class="filtro-container">
+    <input
+      type="text"
+      placeholder="Filtrar por Código IBGE"
+      [ngModel]="filtroCodigo()"
+      (ngModelChange)="filtroCodigo.set($event)"
+      (keyup.enter)="aplicarFiltro()"
+    />
 
-  <table *ngIf="municipios().length > 0" border="1" cellpadding="5">
+    <button (click)="aplicarFiltro()">Filtrar</button>
+
+    <button (click)="filtroCodigo.set(''); aplicarFiltro()">Limpar</button>
+  </div>
+
+  <table *ngIf="municipios().length > 0">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Código IBGE</th>
+        <th>Código IBGE do Município</th>
         <th>Ano/Mês</th>
-        <th>Eixo 01</th>
-        <th>Eixo 02</th>
-        <th>Eixo 03</th>
-        <th>Eixo 04</th>
-        <th>Eixo 05</th>
+        <th>Qtd de ações eixo 01</th>
+        <th>Qtd de ações eixo 02</th>
+        <th>Qtd de ações eixo 03</th>
+        <th>Qtd de ações eixo 04</th>
+        <th>Qtd de ações eixo 05</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let municipio of municipios()">
-        <td>{{ municipio.id }}</td>
         <td>{{ municipio.codigoIbge }}</td>
-        <td>{{ municipio.anomes }}</td>
+        <td>
+          {{ municipio.anomes.toString().slice(0, 4) }}/{{
+            municipio.anomes.toString().slice(4, 6)
+          }}
+        </td>
         <td>{{ municipio.qtdAcoesEixo01 }}</td>
         <td>{{ municipio.qtdAcoesEixo02 }}</td>
         <td>{{ municipio.qtdAcoesEixo03 }}</td>
@@ -36,4 +47,16 @@
       </tr>
     </tbody>
   </table>
+
+  <p *ngIf="municipios().length === 0">Nenhum resultado encontrado.</p>
+
+  <div class="paginacao" *ngIf="totalPaginas() > 1">
+    <button (click)="paginaAnterior()" [disabled]="paginaAtual() === 0">Anterior</button>
+
+    <span> Página {{ paginaAtual() + 1 }} de {{ totalPaginas() }} </span>
+
+    <button (click)="proximaPagina()" [disabled]="paginaAtual() + 1 >= totalPaginas()">
+      Próxima
+    </button>
+  </div>
 </div>

@@ -1,10 +1,11 @@
 package com.acoes.backend.controllers;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acoes.backend.models.Municipios;
@@ -21,12 +22,14 @@ public class MunicipiosController {
     }
 
     @GetMapping
-    public List<String> listarMunicipios() {
-        return service.listarMunicipios();
-    }
+    public Page<Municipios> listar(
+            @RequestParam(required = false) String codigoIbge,
+            @PageableDefault(size = 10) Pageable pageable) {
 
-    @GetMapping("/{codigoIbge}")
-    public List<Municipios> listarPorCodigoIbge(@PathVariable String codigoIbge) {
-        return service.listarPorCodigoIbge(codigoIbge);
+        if (codigoIbge != null && !codigoIbge.isEmpty()) {
+            return service.buscarPorCodigoIbge(codigoIbge, pageable);
+        }
+
+        return service.listar(pageable);
     }
 }

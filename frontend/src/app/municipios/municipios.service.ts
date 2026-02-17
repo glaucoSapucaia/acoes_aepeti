@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
+import { PageResponse } from '../shared/models/page-response.model';
 import { Municipios } from './municipios.model';
 
 @Injectable({
@@ -12,11 +12,13 @@ export class MunicipiosService {
 
   constructor(private http: HttpClient) {}
 
-  listarMunicipios(): Observable<string[]> {
-    return this.http.get<string[]>(this.baseUrl);
-  }
+  listar(page: number, size: number, codigoIbge?: string) {
+    let url = `${this.baseUrl}?page=${page}&size=${size}`;
 
-  listarPorCodigoIbge(codigoIbge: string): Observable<Municipios[]> {
-    return this.http.get<Municipios[]>(`${this.baseUrl}/${codigoIbge}`);
+    if (codigoIbge) {
+      url += `&codigoIbge=${codigoIbge}`;
+    }
+
+    return this.http.get<PageResponse<Municipios>>(url);
   }
 }
