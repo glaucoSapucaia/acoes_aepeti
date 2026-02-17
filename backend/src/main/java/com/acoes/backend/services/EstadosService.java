@@ -1,8 +1,7 @@
 package com.acoes.backend.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.acoes.backend.models.Estados;
@@ -17,15 +16,11 @@ public class EstadosService {
         this.repository = repository;
     }
 
-    public List<String> listarEstados() {
-        return repository.findAll()
-                .stream()
-                .map(Estados::getCodigoIbge)
-                .distinct()
-                .collect(Collectors.toList());
+    public Page<Estados> listar(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
-    public List<Estados> listarPorCodigoIbge(String codigoIbge) {
-        return repository.findByCodigoIbge(codigoIbge);
+    public Page<Estados> buscarPorCodigoIbge(String codigoIbge, Pageable pageable) {
+        return repository.findByCodigoIbge(codigoIbge, pageable);
     }
 }

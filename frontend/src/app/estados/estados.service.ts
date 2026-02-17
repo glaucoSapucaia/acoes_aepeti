@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
+import { PageResponse } from '../shared/models/page-response.model';
 import { Estados } from './estados.model';
 
 @Injectable({
@@ -12,11 +12,13 @@ export class EstadoService {
 
   constructor(private http: HttpClient) {}
 
-  listarEstados(): Observable<string[]> {
-    return this.http.get<string[]>(this.baseUrl);
-  }
+  listar(page: number, size: number, codigoIbge?: string) {
+    let url = `${this.baseUrl}?page=${page}&size=${size}`;
 
-  listarPorCodigoIbge(codigoIbge: string): Observable<Estados[]> {
-    return this.http.get<Estados[]>(`${this.baseUrl}/${codigoIbge}`);
+    if (codigoIbge) {
+      url += `&codigoIbge=${codigoIbge}`;
+    }
+
+    return this.http.get<PageResponse<Estados>>(url);
   }
 }

@@ -143,3 +143,27 @@ h2, h3, h4 {
   margin-bottom: 0.75rem;
   letter-spacing: 0.5px;
 }
+
+/* Paginação */
+.paginacao {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  span {
+    font-weight: 600;
+    color: $color-primary;
+    letter-spacing: 0.5px;
+  }
+
+  button {
+    min-width: 110px;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
